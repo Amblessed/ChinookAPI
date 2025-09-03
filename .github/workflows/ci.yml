@@ -19,13 +19,13 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: ${{ env.POSTGRESQL_USERNAME }}
-          POSTGRES_PASSWORD: ${{ env.POSTGRESQL_PASSWORD }}
-          POSTGRES_DB: ${{ env.POSTGRESQL_DB }}
+          POSTGRES_USER: chinook
+          POSTGRES_PASSWORD: chinook
+          POSTGRES_DB: chinook_auto_increment
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U ${{ env.POSTGRESQL_USERNAME }}"
+          --health-cmd="pg_isready -U chinook"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
