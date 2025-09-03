@@ -8,7 +8,7 @@ package com.amblessed.chinookapi.controller;
  * @Created: 02-Sep-25
  */
 
-import com.amblessed.chinookapi.entity.QueryRequest;
+
 import com.amblessed.chinookapi.repository.SQLExecutor;
 import com.amblessed.chinookapi.service.OpenAIService;
 import org.springframework.http.ResponseEntity;

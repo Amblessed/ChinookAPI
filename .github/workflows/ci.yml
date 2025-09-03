@@ -14,6 +14,7 @@ jobs:
       POSTGRESQL_PASSWORD: chinook
       POSTGRESQL_DB: chinook_auto_increment
       CI: true
+      OPENAI_API_KEY: "dummy-key"
 
     services:
       postgres:
@@ -76,9 +77,9 @@ jobs:
 
       - name: Run Pytest with Allure
         run: |
-          pip install -r src/test/python/requirements.txt
+          pip install -r src/test/requirements.txt
           pip install allure-pytest requests
-          pytest src/test/python/test_spring_endpoints.py --alluredir=allure-results -v || true
+          pytest src/test/test_spring_endpoints.py --alluredir=allure-results -v || true
 
       - name: Install Allure CLI
         run: |
