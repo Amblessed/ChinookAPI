@@ -46,7 +46,7 @@ jobs:
       - name: Run Pytest with Allure (debug)
         shell: pwsh
         run: |
-          pytest tests/test_spring_endpoints.py --alluredir=allure-results -v || exit 0
+          pytest test/test_spring_endpoints.py --alluredir=allure-results -v || exit 0
 
       - name: List Allure Results for Debug
         run: dir allure-results
