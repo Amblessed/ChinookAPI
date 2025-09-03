@@ -26,7 +26,13 @@ jobs:
           python-version: 3.11
 
       - name: Install Maven dependencies
-        run: mvn -f ChinookAPI/pom.xml clean install -DskipTests
+        run: |
+          if exist ChinookAPI\pom.xml (
+            mvn -f ChinookAPI\pom.xml clean install -DskipTests
+          ) else (
+            echo "pom.xml not found in ChinookAPI. Checking root folder..."
+            mvn clean install -DskipTests
+          )
 
       - name: Install Python dependencies
         run: |

@@ -1,6 +1,5 @@
 import subprocess
 import time
-import requests
 import pytest
 import os
 import socket
