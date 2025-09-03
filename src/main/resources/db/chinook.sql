@@ -1,6 +1,6 @@
 /*******************************************************************************
    Chinook Database - Version 1.4.5
-   Script: Chinook_PostgreSql_AutoIncrementPKs.sql
+   Script: chinook.sql
    Description: Creates and populates the Chinook database.
    DB Server: PostgreSql
    Author: Luis Rocha
