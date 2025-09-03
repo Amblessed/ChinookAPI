@@ -28,7 +28,7 @@ jobs:
           --health-cmd="pg_isready -U chinook"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
 
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
 
       - name: Wait for Postgres to be ready
         run: |
-          timeout=120
+          timeout=210
           start=$(date +%s)
           until psql -h localhost -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DB -c "\q" 2>/dev/null; do
             now=$(date +%s)
