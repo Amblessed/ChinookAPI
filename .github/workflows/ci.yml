@@ -32,19 +32,21 @@ jobs:
       - name: Install Maven dependencies
         shell: pwsh
         run: |
-          if (Test-Path "ChinookAPI/pom.xml") {
+          if (Test-Path "pom.xml") {
               Write-Host "Found pom.xml in ChinookAPI. Installing dependencies..."
-              mvn -f ChinookAPI/pom.xml clean install -DskipTests
-          } else {
-              Write-Host "pom.xml not found in ChinookAPI. Using root folder..."
               mvn clean install -DskipTests
+          } else {
+              Write-Host "No pom.xml found at repo!"
+              exit 1
           }
 
       - name: Install Python dependencies
         shell: pwsh
         run: |
           python -m pip install --upgrade pip
-          pip install -r tests/requirements.txt
+          if (Test-Path "test/requirements.txt") {
+              pip install -r test/requirements.txt
+          }
           pip install allure-pytest requests
 
       - name: List test folder
