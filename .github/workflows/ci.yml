@@ -51,12 +51,12 @@ jobs:
 
       - name: List test folder
         shell: pwsh
-        run: Get-ChildItem test
+        run: Get-ChildItem src/test
 
       - name: Run Pytest with Allure (debug)
         shell: pwsh
         run: |
-          pytest test/test_spring_endpoints.py --alluredir=allure-results -v || exit 0
+          pytest src/test/test_spring_endpoints.py --alluredir=allure-results -v || exit 0
 
       - name: List Allure Results for Debug
         run: dir allure-results
