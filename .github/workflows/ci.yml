@@ -2,9 +2,9 @@ name: CI Spring Boot + Pytest on Windows
 
 on:
   push:
-    branches: [ main, develop, feature/* ]
+    branches: [ master, develop, feature/* ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   build-and-test:
