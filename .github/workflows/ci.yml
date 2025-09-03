@@ -49,9 +49,9 @@ jobs:
 
       - name: Wait for Postgres to be ready
         run: |
-          timeout=210
+          timeout=180
           start=$(date +%s)
-          until psql -h localhost -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DB -c "\q" 2>/dev/null; do
+          until psql -h postgres -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DB -c "\q" 2>/dev/null; do
             now=$(date +%s)
             elapsed=$((now - start))
             if [ $elapsed -ge $timeout ]; then
@@ -65,7 +65,10 @@ jobs:
         env:
           PGPASSWORD: ${{ env.POSTGRESQL_PASSWORD }}
         run: |
-          psql -h localhost -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DB -f src/main/resources/db/chinook.sql
+          psql -h postgres -U $POSTGRESQL_USERNAME -d $POSTGRESQL_DB -f src/main/resources/db/chinook.sql
+
+      - name: Override Spring Boot DB URL for CI
+        run: echo "SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/chinook_auto_increment" >> $GITHUB_ENV
 
       - name: Start Spring Boot
         run: |
