@@ -26,21 +26,25 @@ jobs:
           python-version: 3.11
 
       - name: Install Maven dependencies
+        shell: pwsh
         run: |
-          if exist ChinookAPI\pom.xml (
-            mvn -f ChinookAPI\pom.xml clean install -DskipTests
-          ) else (
-            echo "pom.xml not found in ChinookAPI. Checking root folder..."
-            mvn clean install -DskipTests
-          )
+          if (Test-Path "ChinookAPI/pom.xml") {
+              Write-Host "Found pom.xml in ChinookAPI. Installing dependencies..."
+              mvn -f ChinookAPI/pom.xml clean install -DskipTests
+          } else {
+              Write-Host "pom.xml not found in ChinookAPI. Using root folder..."
+              mvn clean install -DskipTests
+          }
 
       - name: Install Python dependencies
+        shell: pwsh
         run: |
           python -m pip install --upgrade pip
           pip install -r tests/requirements.txt
           pip install allure-pytest requests
 
       - name: Run Pytest with Allure (debug)
+        shell: pwsh
         run: |
           pytest tests/test_spring_endpoints.py --alluredir=allure-results -v || exit 0
 
@@ -48,14 +52,20 @@ jobs:
         run: dir allure-results
 
       - name: Install Allure Commandline
+        shell: pwsh
         run: |
           curl -sSL https://github.com/allure-framework/allure2/releases/download/2.19.0/allure-2.19.0.zip -o allure.zip
           Expand-Archive allure.zip -DestinationPath allure
           $env:PATH += ";$(pwd)\allure\bin"
 
       - name: Generate Allure Report
+        shell: pwsh
         run: |
-          if (Test-Path allure-results) { allure generate allure-results --clean -o allure-report } else { Write-Host "No allure-results found" }
+          if (Test-Path allure-results) {
+              allure generate allure-results --clean -o allure-report
+          } else {
+              Write-Host "No allure-results found"
+          }
 
       - name: List Allure Report Folder
         run: dir allure-report
