@@ -26,9 +26,7 @@ def test_get_customers_by_country():
     customers: list = response.json()
     assert isinstance(customers, list)
     assert len(customers) == 13
-    for customer in customers:
-        assert customer['country'].lower() == 'usa'
-
+    assert all(customer["country"] == "USA" for customer in customers)
 
 @allure.feature('Get Customers By City API')
 @allure.story('GET /api/v1/customer/city')
@@ -40,5 +38,4 @@ def test_get_customers_by_city():
     customers: list = response.json()
     assert isinstance(customers, list)
     assert len(customers) == 2
-    for customer in customers:
-        assert customer['city'].lower() == 'prague'
+    assert all(customer["city"].lower() == "prague" for customer in customers)

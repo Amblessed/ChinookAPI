@@ -22,6 +22,15 @@ def is_port_open(port):
 @pytest.fixture(scope="session", autouse=True)
 def spring_boot_server():
 
+    """
+    Start Spring Boot only if running locally.
+    On CI (GitHub Actions), the server is started by the workflow.
+    """
+    if os.getenv("CI", "false").lower() == "true":
+        print("CI environment detected — assuming Spring Boot is already running.")
+        yield
+        return
+
     # Check if port is already in use
     if is_port_open(SERVER_PORT):
         raise RuntimeError(f"Port {SERVER_PORT} is already in use. Stop any process using it first.")
